@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM eclipse-temurin:21-jdk-jammy AS build
+FROM eclipse-temurin:17-jdk-jammy AS build
 
 WORKDIR /app
 
@@ -10,12 +10,12 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run
-FROM eclipse-temurin:21-jdk-jammy
+FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /app
 
 # Copy JAR from build stage
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar app.jar
 
-# Run app
+# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
