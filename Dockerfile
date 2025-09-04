@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM eclipse-temurin:21-jdk-jammy-slim AS build
+FROM eclipse-temurin:21-jdk-jammy AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run
-FROM eclipse-temurin:21-jdk-jammy-slim
+FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /app
 
@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar app.jar
 
 # Run app
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
