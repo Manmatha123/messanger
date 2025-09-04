@@ -1,21 +1,21 @@
-# Stage 1: Build
-FROM eclipse-temurin:17-jdk-jammy AS build
+# Stage 1: Build with Maven
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Copy project source
+# Copy source code
 COPY . .
 
-# Build JAR
+# Build the JAR
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run
+# Stage 2: Run with JDK only
 FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /app
 
-# Copy JAR from build stage
+# Copy built JAR
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar app.jar
 
-# Run the Spring Boot application
+# Run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
