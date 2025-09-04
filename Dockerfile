@@ -1,9 +1,14 @@
 # Use Java 21 JDK as the base image
 FROM eclipse-temurin:21-jdk-jammy
 
-# Copy the built JAR file into the container
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# Set working directory
+WORKDIR /app
+
+# Copy the project source code
+COPY . .
+
+# Build the JAR inside the container
+RUN ./mvnw clean package -DskipTests
 
 # Run the Spring Boot application
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","target/server-0.0.1-SNAPSHOT.jar"]
