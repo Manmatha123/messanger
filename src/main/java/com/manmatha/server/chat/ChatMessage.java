@@ -14,4 +14,5 @@ public class ChatMessage implements Serializable{
     private String senderId;
     private String message; 
     private String image;
+    private String replyTo;
 }
