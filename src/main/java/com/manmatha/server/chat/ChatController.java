@@ -28,6 +28,8 @@ public class ChatController {
         }
     }
 
+
+
     @MessageMapping("/chat")
     public void processMessage(ChatMessage chatMessage) {
 
